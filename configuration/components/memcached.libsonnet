@@ -59,6 +59,8 @@ local defaults = {
   securityContext: {
     fsGroup: 65534,
     runAsUser: 65534,
+    privileged: false,
+    readOnlyRootFilesystem: true,
   },
 
 };

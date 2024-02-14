@@ -46,5 +46,7 @@ spec:
         resources: {}
       securityContext:
         fsGroup: 65534
+        privileged: false
+        readOnlyRootFilesystem: true
         runAsUser: 65534
       serviceAccount: observatorium-xyz-thanos-receive-controller

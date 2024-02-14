@@ -13,6 +13,10 @@ local defaults = {
   version: 'v0.24.0',
   image: 'quay.io/thanos/thanos:' + defaults.version,
   imagePullPolicy: 'IfNotPresent',
+  securityContext: {
+    privileged: false,
+    readOnlyRootFilesystem: true,
+  },
   objectStorageConfig: {
     name: 'thanos-objectstorage',
     key: 'thanos.yaml',
@@ -49,6 +53,7 @@ local defaults = {
     image: 'quay.io/observatorium/thanos-receive-controller:' + rc.version,
     imagePullPolicy: 'IfNotPresent',
     hashrings: defaults.hashrings,
+    securityContext+:: defaults.securityContext,
   },
 
   memcached: {
@@ -79,6 +84,7 @@ local defaults = {
     retentionResolutionRaw: '14d',
     retentionResolution5m: '1s',
     retentionResolution1h: '1s',
+    securityContext+:: defaults.securityContext,
   },
 
   receivers: {
@@ -97,6 +103,7 @@ local defaults = {
         },
       },
     },
+    securityContext+:: defaults.securityContext,
   },
 
   rule: {
@@ -111,6 +118,7 @@ local defaults = {
         },
       },
     },
+    securityContext+:: defaults.securityContext,
   },
 
   storeCache: defaults.memcached {
@@ -125,11 +133,13 @@ local defaults = {
   query: {
     replicas: 1,
     queryTimeout: '15m',
+    securityContext+:: defaults.securityContext,
   },
 
   queryFrontend: {
     replicas: 1,
     maxItemSize: '10MiB',
+    securityContext+:: defaults.securityContext,
   },
 
   queryFrontendCache: defaults.memcached {
